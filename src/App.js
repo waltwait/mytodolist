@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import TodoList from './todolist/TodoList';
 import AddTodo from './todolist/AddTodo';
+import './App.css';
 
 
 function App() {
@@ -39,11 +40,34 @@ function App() {
     }, []);
 
     const toggleTodoStatus = (id) => {
+        const todo = todos.find(t => t._id === id);
+        if (!todo) return;
+    
+        const updatedTodo = { ...todo, completed: !todo.completed };
+    
         fetch(`/api/todos/update/${id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
             },
+            body: JSON.stringify(updatedTodo),
+        })
+        .then(response => response.json())
+        .then(() => {
+            fetchTodos(); 
+        })
+        .catch(error => console.error('Error:', error));
+    };
+    
+
+    // 新增一個函數來更新 Todo
+    const updateTodo = (id, updatedTodo) => {
+        fetch(`/api/todos/update/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updatedTodo),
         })
         .then(response => response.json())
         .then(() => {
@@ -52,11 +76,12 @@ function App() {
         .catch(error => console.error('Error:', error));
     };
 
+
     return (
         <div className="App">
             <h1>My To-Do App</h1>
             <AddTodo onAdd={addTodo} />
-            <TodoList todos={todos} toggleTodoStatus={toggleTodoStatus} />
+            <TodoList todos={todos} toggleTodoStatus={toggleTodoStatus} updateTodo={updateTodo} />
         </div>
     );
 }

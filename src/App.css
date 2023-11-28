@@ -1,21 +1,16 @@
 .App {
   text-align: center;
+  max-width: 600px; /* 限制应用的最大宽度 */
+  margin: auto; /* 居中显示 */
+  padding: 20px; /* 添加一些内边距 */
+  background-color: #f4f4f4; /* 设定一个浅色背景 */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
+/* 移除 App-logo 相关的样式，因为它可能不适用于待办事项应用 */
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-color: #282c34; /* 保留原有的头部背景颜色 */
+  min-height: 20vh; /* 减少最小高度，因为不再需要填满整个视口 */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,15 +19,85 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/* 以下是添加的待办事项相关的样式 */
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+/* 在li元素上设置display属性以控制内部元素的排列方式 */
+li {
+  background: white;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-@keyframes App-logo-spin {
+/* 添加新的样式类来设置按钮的样式 */
+.todo-buttons {
+  display: flex;
+  align-items: center;
+}
+
+/* 调整按钮样式 */
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+/* 添加一些内边距和样式类以控制文本样式 */
+.todo-text {
+  flex-grow: 1;
+  margin-right: 10px;
+  text-decoration: line-through;
+}
+
+/* 调整输入框样式 */
+input[type="text"] {
+  padding: 10px;
+  margin-right: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 70%;
+}
+
+/* 修改“Mark as Completed”按钮的背景颜色 */
+.toggle-status {
+  background-color: #28a745;
+}
+
+/* 修改按钮悬停状态的颜色 */
+button:hover {
+  background-color: #0056b3;
+}
+
+/* 新增样式类来控制编辑视窗的排列方式 */
+.edit-todo-container {
+  display: flex;
+  align-items: center;
+}
+
+/* 新增样式类来控制Save按钮的位置 */
+.save-button-container {
+  margin-left: 5px;
+}
+
+
+/* @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
   }
-}
+} */

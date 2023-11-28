@@ -32,13 +32,25 @@ router.patch('/update/:id', async (req, res) => {
         if (!todo) {
             return res.status(404).json({ message: 'Todo not found' });
         }
-        todo.completed = !todo.completed;  // 切換狀態
+
+        // 如果請求中包含 task，則更新它
+        if (req.body.task !== undefined) {
+            todo.task = req.body.task;
+        }
+
+        // 如果請求中包含 completed 狀態的更新，則更新它
+        if (req.body.completed !== undefined) {
+            todo.completed = req.body.completed;
+        }
+
+        // 保存更新後的待辦事項
         const updatedTodo = await todo.save();
         res.json(updatedTodo);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 });
+
 
 
 module.exports = router;
