@@ -25,6 +25,20 @@ router.post('/add', async (req, res) => {
     }
 });
 
-// 其他路由...
+// 更新 Todo 狀態
+router.patch('/update/:id', async (req, res) => {
+    try {
+        const todo = await Todo.findById(req.params.id);
+        if (!todo) {
+            return res.status(404).json({ message: 'Todo not found' });
+        }
+        todo.completed = !todo.completed;  // 切換狀態
+        const updatedTodo = await todo.save();
+        res.json(updatedTodo);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 
 module.exports = router;

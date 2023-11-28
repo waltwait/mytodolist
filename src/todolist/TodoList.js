@@ -1,22 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-function TodoList() {
-    const [todos, setTodos] = useState([]);
-
-    useEffect(() => {
-        fetch('/api/todos')
-            .then(response => response.json())
-            .then(data => setTodos(data))
-            .catch(error => console.error('Error:', error));
-    }, []);
-
+function TodoList({ todos, toggleTodoStatus }) {  // 添加 toggleTodoStatus 函數
     return (
         <div>
             <h2>To-Do List</h2>
             <ul>
                 {todos.map(todo => (
-                    <li key={todo._id}>
-                        {todo.task} - {todo.completed ? 'Completed' : 'Pending'}
+                    <li key={todo._id} style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
+                        {todo.task} 
+                        <button onClick={() => toggleTodoStatus(todo._id)}>
+                            {todo.completed ? 'Mark as Pending' : 'Mark as Completed'}
+                        </button>
                     </li>
                 ))}
             </ul>

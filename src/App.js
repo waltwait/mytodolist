@@ -15,11 +15,6 @@ function App() {
             .catch(error => console.error('Error:', error));
     };
 
-    // 在组件加载时获取 Todo 列表
-    useEffect(() => {
-        fetchTodos();
-    }, []);
-
     // 添加新的 Todo 项的函数
     const addTodo = (task) => {
         fetch('/api/todos/add', {
@@ -39,11 +34,29 @@ function App() {
         });
     };
 
+    useEffect(() => {
+        fetchTodos();
+    }, []);
+
+    const toggleTodoStatus = (id) => {
+        fetch(`/api/todos/update/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(() => {
+            fetchTodos(); // 更新成功後重新獲取 Todo 列表
+        })
+        .catch(error => console.error('Error:', error));
+    };
+
     return (
         <div className="App">
             <h1>My To-Do App</h1>
             <AddTodo onAdd={addTodo} />
-            <TodoList todos={todos} />
+            <TodoList todos={todos} toggleTodoStatus={toggleTodoStatus} />
         </div>
     );
 }
